@@ -1,0 +1,13 @@
+def fat int
+	par n int{
+		if n==0{
+		 return 1
+		}
+		return n * fat(n-1)
+	}
+
+def main {
+	var a, b int
+	b = 5
+	a = fat(b)
+}

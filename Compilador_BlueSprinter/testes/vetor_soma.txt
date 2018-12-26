@@ -1,0 +1,25 @@
+def somar int
+	par v int[] {
+	var i int
+	var soma int
+	soma = 0
+	i = 0
+	while i < len(v) {
+		soma = soma + v[i]
+		i = i + 1
+	}
+	return soma
+}
+
+def main {
+	var z int[10]
+	var soma, i int
+	var x int
+	i = 0
+	while i < len(z) {
+		z[i] = 2*i + 1
+		i = i + 1
+	}
+	soma = somar(z)
+	x = soma*2 + 1
+}

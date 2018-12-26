@@ -1,0 +1,60 @@
+<tokenizer>
+    q32 q30 q13 q7 q22 q36 q11 q17 q24 q6 q27 q37 q3 q34 q1 q38 q29 q26 q19 q4 q9 q15 q20 q39 q40 q41 q42 q43
+
+    q37
+
+    q32 q30 q13 q7 q22 q36 q11 q17 q24 q27 q34 q1 q38 q29 q4 q9 q15 q20 q39 q40 q41 q42 q43
+
+    ( digito_dec digito_hex ) ! , > zero < ] [ letra = { : } delimitador controle + - * / _
+
+    (q37, 'delimitador') -> q37\limpa
+    (q37, 'controle') -> q39
+
+    (q37, '+') -> q40
+    (q37, '-') -> q41
+    (q37, '*') -> q42
+    (q37, '/') -> q43
+
+    (q37, '>') -> q36
+    (q36, '=') -> q7
+
+    (q37, '<') -> q22
+    (q22, '=') -> q20
+    
+    (q37, '=') -> q34
+    (q34, '=') -> q4
+    
+    (q37, '!') -> q26
+    (q26, '=') -> q27
+    
+    (q37, '(') -> q13
+    (q37, ')') -> q32
+
+    (q37, 'zero') -> q30\numeroDecimal
+    
+    (q37, 'digito_dec') -> q29\numeroDecimal
+    (q29, 'digito_dec') -> q29\numeroDecimal
+    (q29, 'zero') -> q29\numeroDecimal
+    
+    (q37, ']') -> q9
+    (q37, '[') -> q38
+    
+    
+    (q37, ',') -> q11
+    
+    (q37, '{') -> q17
+    (q37, '}') -> q1
+    
+    (q37, ':') -> q24
+    
+    (q37, 'letra') -> q15
+    (q37, 'digito_hex') -> q15
+    (q15, 'digito_hex') -> q15
+    (q37, '_') -> q15
+    (q15, 'digito_dec') -> q15
+    (q15, 'letra') -> q15
+    (q15, 'zero') -> q15
+    (q15, '_') -> q15
+
+
+</tokenizer>

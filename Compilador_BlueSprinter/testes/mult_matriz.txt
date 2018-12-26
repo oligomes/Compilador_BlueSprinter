@@ -1,0 +1,30 @@
+def multMatriz
+	par m1, m2, mr int[][] {
+	var i, j, k, mult int
+	i = 0
+	while i < 2 {
+		j = 0
+		while j < 1 {
+			k = 0
+			mult = 0
+			while k < 2 {
+				mult = mult + m1[i, k]*m2[k, j]
+				k = k + 1
+			}
+			mr[i, j] = mult
+			j = j + 1
+		}
+		i = i + 1
+	}
+}
+def main {
+	var x int[2][2]
+	var y, z int[2][1]
+	x[0, 0] = 6
+	x[0, 1] = 9
+	x[1, 0] = 18
+	x[1, 1] = 8
+	y[0, 0] = 10
+	y[1, 0] = 5
+	multMatriz(x, y, z)
+}

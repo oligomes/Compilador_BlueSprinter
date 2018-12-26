@@ -1,0 +1,206 @@
+<S>
+DefineFunc DeclaraParametros DeclaraVariaveis Expressao Operando Bloco While IF
+DefineFunc
+<DefineFunc>
+q8 q11 q5 q12 q2 q10 q9 q13 q0 q4 q6 q3 q1 q14 q16 q17 q18 q19 q20 q21 q22 q23 q24 q25
+q0
+q9
+par var } def = enter { , Identificador int return
+	(q0, 'def') -> q1
+	(q1, 'Identificador') -> q2\declaracao_funcao
+	(q2, 'int') -> q3\definir_tipo_funcao
+	(q2, 'bool') -> q3\definir_tipo_funcao
+	(q2, 'enter') -> q5
+	(q5, 'par') -> q6
+	q6 => (DeclaraParametros, q3)\inicia_declaracao_parametros
+	(q3, 'enter') -> q5
+	(q5, 'enter') -> q5
+	(q5, '{') -> q4\calcular_end_parametros
+	(q3, '{') -> q4\calcular_end_parametros
+	(q2, '{') -> q4
+	(q4, 'var') -> q10\inicia_declaracao_variavel
+	q10 => (DeclaraVariaveis, q4)
+	(q4, '}') -> q9\encerra_funcao
+	(q4, 'enter') -> q4
+	(q4, 'Identificador') -> q8\inicia_comando_simples
+	(q8, '[') -> q23
+	q23 => (Expressao, q24)\iniciar_expressao_mat
+	(q24, ',') -> q23\add_indice
+	(q24, ']') -> q8\add_indice_e_mult_word
+	(q8, '=') -> q11
+	q11 => (Expressao, q12)\iniciar_expressao_mat
+	(q12, 'enter') -> q13\comando_atribuicao
+	(q8, '(')-> q16\iniciar_frame
+	(q13, '}') -> q9\encerra_funcao
+	(q13, 'enter') -> q13
+	(q13, 'Identificador') -> q8\inicia_comando_simples
+	(q16, ')') -> q17
+	q16 => (Expressao, q18)\iniciar_expressao_mat
+	(q18, ',') -> q16\guarda_parametro
+	(q18, ')') -> q17\guarda_parametro
+	(q17, 'enter') -> q13\chamar_funcao
+	(q9, 'enter') -> q9
+	(q9, 'def') -> q1
+	(q4, 'return') -> q19
+	(q13, 'return') -> q19
+	q19 => (Expressao, q20)\iniciar_expressao_mat
+	(q20, 'enter') -> q13\comando_retorno
+	(q19, 'enter') -> q13\comando_retorno
+
+	(q4, 'if') -> q21
+	(q13, 'if') -> q21
+	q21 => (IF, q13)
+
+	(q4, 'while') -> q22
+	(q13, 'while') -> q22
+	q22 => (While, q13)\constroi_while
+</DefineFunc>
+
+<DeclaraParametros>
+q0 q1 q2 q4 q5 q7 q8
+q0
+q2 q5 q8
+Identificador , int bool [ ]
+	(q0, 'Identificador') -> q1\novo_par
+	(q1, ',') -> q0
+	(q1, 'int') -> q2\add_tipo
+	(q1, 'bool') -> q2\add_tipo
+	(q2, '[') -> q4
+	(q4, ']') -> q5\add_rank_parametro
+	(q5, '[') -> q7
+	(q7, ']') -> q8\add_rank_parametro
+	q2 => pop()\fecha_declaracao_parametro
+	q5 => pop()\fecha_declaracao_parametro
+	q8 => pop()\fecha_declaracao_parametro
+</DeclaraParametros>
+
+<DeclaraVariaveis>
+q0 q1 q2 q3 q4 q5 q6 q7 q8
+q0
+q2 q5 q8
+Identificador , int bool [ Numero ]
+	(q0, 'Identificador') -> q1\nova_var
+	(q1, ',') -> q0
+	(q1, 'int') -> q2\add_tipo
+	(q1, 'bool') -> q2\add_tipo
+	(q2, '[') -> q3
+	(q3, 'Numero') -> q4\add_dim
+	(q4, ']') -> q5
+	(q5, '[') -> q6
+	(q6, 'Numero') -> q7\add_dim
+	(q7, ']') -> q8
+	q2 => pop()\fecha_declaracao_variavel
+	q5 => pop()\fecha_declaracao_variavel
+	q8 => pop()\fecha_declaracao_variavel
+</DeclaraVariaveis>
+
+<Expressao>
+q0 q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13
+q0
+q1
+- Numero ) Identificador ( + / * Comparacao and or not len ] [ ,
+	q0 => (Operando, q1)
+	(q0, 'Numero') -> q1\recebe_operando_num
+	(q0, '-') -> q6\inverte_termo
+	(q0, 'not') -> q6
+	(q0, '(') -> q2\abre_parenteses
+	q6 => (Operando, q1)
+	(q6, 'Numero') -> q1\recebe_operando_num
+	(q6, '(') -> q2\abre_parenteses
+	(q1, '-') -> q0\mais_ou_menos
+	(q1, '+') -> q0\mais_ou_menos
+	(q1, '/') -> q0\vezes_ou_dividir
+	(q1, '*') -> q0\vezes_ou_dividir
+	(q1, 'and') -> q0\and_op
+	(q1, 'or') -> q0\or_op
+	(q1, 'Comparacao') -> q0\recebe_comparador
+	q2 => (Expressao, q3)
+	(q3, ')') -> q1\fecha_parenteses
+
+	(q0, 'len') -> q7
+	(q7, '(') -> q8
+	(q8, 'Identificador') -> q9\recebe_operando_id
+	(q9, ')') -> q1\get_len_v
+	(q9, ',') -> q10
+	q10 => (Expressao, q11)\iniciar_expressao_mat
+	(q11, ')') -> q1\get_len
+
+	q1 => pop()\finalizar_expressao_mat
+</Expressao>
+
+<Operando>
+q0 q1 q2 q3 q4 q5 q6 q7
+q0
+q1 q4 q7
+Identificador [ ] ( ) ,
+	(q0, 'Identificador') -> q1\recebe_operando_id
+
+	(q1, '(') -> q2\iniciar_frame
+	q2 => (Expressao, q3)\iniciar_expressao_mat
+	(q3, ')') -> q4\guarda_parametro_e_chamar_funcao
+	(q3, ',') -> q2\separa_argumentos
+	(q2, ')') -> q4
+
+	(q1, '[') -> q5
+	q5 => (Expressao, q6)\iniciar_expressao_mat
+	(q6, ']') -> q7\add_indice_e_mult_word
+	(q6, ',') -> q5\add_indice
+
+	q1 => pop()\finaliza_operando_1
+	q4 => pop()
+	q7 => pop()\finaliza_operando_7
+</Operando>
+
+<IF>
+q3 q2 q6 q0 q7 q5 q1 q4
+q0
+q2 q5
+elif else enter
+	q0 => (Expressao, q1)\iniciar_expressao_mat
+	q1 => (Bloco, q2)\constroi_if
+	(q2, 'elif') -> q3
+	q3 => (Expressao, q6)\iniciar_expressao_mat
+	q6 => (Bloco, q7)\constroi_elif
+	(q7, 'enter') -> q2
+	(q2, 'enter') -> q2
+	(q2, 'else') -> q4\constroi_else
+	q4 => (Bloco, q5)
+	q2 => pop()\fecha_if
+	q5 => pop()\fecha_else
+</IF>
+
+<Bloco>
+q3 q2 q6 q0 q7 q5 q1 q4 q8 q9 q10 q11 q12
+q0
+q7
+{ = Identificador if } enter return while
+	(q0, '{') -> q1
+	(q1, 'enter') -> q2
+	(q2, 'Identificador') -> q4\inicia_comando_simples
+	(q4, '[') -> q13
+	q13 => (Expressao, q14)\iniciar_expressao_mat
+	(q14, ',') -> q13\add_indice
+	(q14, ']') -> q4\add_indice_e_mult_word
+	(q4, '=') -> q6
+	q6 => (Expressao, q8)\iniciar_expressao_mat
+	(q8, 'enter') -> q2\comando_atribuicao
+	(q2, 'return') -> q9
+	q9 => (Expressao, q10)\iniciar_expressao_mat
+	(q10, 'enter') -> q2\comando_retorno
+	(q2, 'if') -> q5
+	q5 => (IF, q2)
+	(q2, '}') -> q3
+	(q3, 'enter') -> q7
+	(q2, 'while') -> q12
+	q12 => (While, q2)\constroi_while
+</Bloco>
+
+<While>
+q0 q1 q2
+q0
+q2
+	q0 => (Expressao, q1)\iniciar_expressao_mat
+	q1 => (Bloco, q2)\constroi_while2
+	q2 => pop()\fecha_while
+</While>
+</S>

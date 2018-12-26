@@ -1,0 +1,11 @@
+def func int
+	par n1, n2 int{
+		var a, b int
+    a = 2
+    b = 3
+		return (a+n1)*(b+n2)
+	}
+
+def main {
+	func(5,6)
+}
